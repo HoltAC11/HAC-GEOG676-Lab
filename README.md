@@ -6,7 +6,7 @@ Name: Holt Chambers
 
 UIN:630000747
 
-[Homework](./Homework/)
+[Homework](./Homework/README.md)
 
 |Labs|
 |:--:|
@@ -18,4 +18,4 @@ UIN:630000747
 |[Lab6](Labs/Lab6/README.md)|
 |[Lab7](Labs/Lab7/README.md)|
 
-[Projects](./Projects/)
+[Projects](./Projects/README.md)

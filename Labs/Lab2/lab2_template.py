@@ -19,7 +19,7 @@ if __name__ == "__main__":
     result2 = 0
 
     ### Add your code here
-    resutl2 = reduce(lambda x,y: x+y)
+    result2 = reduce(lambda x,y: x+y, lst2)
     ###
 
     print(f"Results of Q2:")
@@ -30,7 +30,13 @@ if __name__ == "__main__":
     result3 = 0
 
     ### Add your code here
-
+    evenlst = []
+    for i in lst3:
+       if i % 2 == 0:
+           evenlst.append(i)
+    
+    result3 = reduce(lambda j,k: j + k, evenlst)
+        
     ###
 
     print(f"Results of Q3:")

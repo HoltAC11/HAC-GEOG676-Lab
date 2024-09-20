@@ -6,9 +6,9 @@ if __name__ == "__main__":
     result1 = 1
 
     ### Add your code here
-    from functools import reduce
-    result1 = reduce(lambda m,n: m*n, lst1)
-        
+    for i in lst1:
+        result1 = result1 * i
+    print(f"result1 = {result1}")
     ###
 
     print(f"Results of Q1:")
@@ -19,7 +19,8 @@ if __name__ == "__main__":
     result2 = 0
 
     ### Add your code here
-    result2 = reduce(lambda x,y: x+y, lst2)
+    for i in lst2:
+        result2 = result2 + i
     ###
 
     print(f"Results of Q2:")
@@ -30,13 +31,16 @@ if __name__ == "__main__":
     result3 = 0
 
     ### Add your code here
-    evenlst = []
+    from functools import reduce
+
+    evenlst = [] # make a new list to hold each the even numbers
+
     for i in lst3:
-       if i % 2 == 0:
-           evenlst.append(i)
+       if i % 2 == 0: # iterate through the list to determine if the value is even
+           evenlst.append(i) # add that value to the even list if it is even
     
-    result3 = reduce(lambda j,k: j + k, evenlst)
-        
+    for i in evenlst:
+        result3 = result3 + i
     ###
 
     print(f"Results of Q3:")

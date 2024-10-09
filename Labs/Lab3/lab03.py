@@ -13,7 +13,10 @@ class CensusTract:
     def calculate_population_density(self):
         # calculate the population density based on geometry
         ### >>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<< ###
-        
+        population = row['Pop']
+        area = gpd.GeoSeries(row['geometry'])
+        area1 = row['geometry'].area
+        population_density = population / area
         return population_density
         ### <<<<<<<<<<< END OF YOUR CODE <<<<<<<<<<< ###
 if __name__ == "__main__":

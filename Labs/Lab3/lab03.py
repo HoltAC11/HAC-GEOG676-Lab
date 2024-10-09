@@ -2,7 +2,7 @@ import os
 import geopandas as gpd
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE_DIR, 'data')
+DATA_DIR = os.path.join(BASE_DIR, 'Lab3')
 
 class CensusTract:
     def __init__(self, geoid, population, geometry):

@@ -13,10 +13,10 @@ class CensusTract:
     def calculate_population_density(self):
         # calculate the population density based on geometry
         ### >>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<< ###
-        pop_temp = gdf['Pop']
-        geometry_temp = gdf.to_crs(epsg=3081)
-        area_temp = geometry_temp.area / 10**6
-        population_density = pop_temp / area_temp
+        pop_temp = gdf['Pop']  # population
+        geometry_temp = gdf.to_crs(epsg=3081)  # Convert the CRS to the Texas State Mapping System so it's in a projected CRS
+        area_temp = geometry_temp.area / 10**6  # Covert the area to be in square kilometers
+        population_density = pop_temp / area_temp  # population density 
         return population_density
         ### <<<<<<<<<<< END OF YOUR CODE <<<<<<<<<<< ###
 
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     # load data into GeoDataFrame
     gdf = gpd.read_file(file_path)
     # preview data
-    print(gdf.head(10))
+    print(gdf.head(10))  # view the first 10 rows of data
     print(gdf.columns)
     print(gdf.shape)
     print(gdf.dtypes)
@@ -35,20 +35,19 @@ if __name__ == "__main__":
     ### >>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<< ###
     # instantiate the CensusTract class
     CT_temp = CensusTract(
-        geoid = gdf['GeoId'],
-        population = gdf['Pop'],
-        geometry = gdf['geometry']
+        geoid = gdf['GeoId'],  # retreive the GeoID for the class
+        population = gdf['Pop'],  # retreive the population for the class
+        geometry = gdf['geometry']  # retreive the geometry for the class
     )
 
     # calculate the population density for each census tract
-    for index,row in gdf.iterrows():
-        CT_temp
-        pop_density_temp = CT_temp.calculate_population_density()
-        gdf = gdf.assign(Pop_Den_new = pop_density_temp)
-    # create a new column for the population density and name it as 'Pop_Den_new'
+    for index,row in gdf.iterrows():  # loop through the data set
+        CT_temp  # pull in the variables for each row of a data using the CT_Temp class
+        pop_density_temp = CT_temp.calculate_population_density()  # usse the pop. density function to calculate for each row
+        gdf = gdf.assign(Pop_Den_new = pop_density_temp)  # create the pop. density column ('Pop_Den_new') and assign the values for each row
 
     ### <<<<<<<<<<< END OF YOUR CODE <<<<<<<<<<< ###
 
-    # preview the data again
+    # preview the first 10 data rows again with the new column
     print(gdf.head(10))
     

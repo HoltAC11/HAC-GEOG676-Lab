@@ -16,7 +16,7 @@ class CensusTract:
         pop_temp = gdf['Pop']  # population
         geometry_temp = gdf.to_crs(epsg=3081)  # Convert the CRS to the Texas State Mapping System so it's in a projected CRS
         area_temp = geometry_temp.area / 10**6  # Covert the area to be in square kilometers
-        population_density = pop_temp / area_temp  # population density 
+        population_density = pop_temp / area_temp  # calculate the population density based on the geometry
         return population_density
         ### <<<<<<<<<<< END OF YOUR CODE <<<<<<<<<<< ###
 
@@ -31,14 +31,9 @@ if __name__ == "__main__":
     print(gdf.shape)
     print(gdf.dtypes)
 
-    # calculate the Population Density based on geometry
     ### >>>>>>>>>>>> YOUR CODE HERE <<<<<<<<<<< ###
     # instantiate the CensusTract class
-    CT_temp = CensusTract(
-        geoid = gdf['GeoId'],  # retreive the GeoID for the class
-        population = gdf['Pop'],  # retreive the population for the class
-        geometry = gdf['geometry']  # retreive the geometry for the class
-    )
+    CT_temp = CensusTract(geoid = gdf['GeoId'], population = gdf['Pop'], geometry = gdf['geometry'])
 
     # calculate the population density for each census tract
     for index,row in gdf.iterrows():  # loop through the data set

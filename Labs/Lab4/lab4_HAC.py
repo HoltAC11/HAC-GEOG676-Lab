@@ -63,8 +63,7 @@ arcpy.analysis.Buffer('garages', 'garages_buffered', radiumStr)
 # Intersect analysis
 arcpy.analysis.Intersect(['garages_buffered', 'structures_projected'], 'intersection')
 # Output features to the created GDB
-if not os.path.exists(OUTPUT_DB_PATH + "\Lab4GDB.gdb" + "\Garages"):  # Check if the files exist already to prevent errors
-    arcpy.management.CopyFeatures('garages', os.path.join(OUTPUT_DB_PATH, 'Lab4GDB.gdb', 'Garages'))
-    arcpy.management.CopyFeatures('Structures', os.path.join(OUTPUT_DB_PATH, 'Lab4GDB.gdb', 'Structures'))
-    arcpy.management.CopyFeatures('garages_buffered', os.path.join(OUTPUT_DB_PATH, 'Lab4GDB.gdb', 'Garages_Buffered'))
-    arcpy.management.CopyFeatures('intersection', os.path.join(OUTPUT_DB_PATH, 'Lab4GDB.gdb', 'Intersection'))
+arcpy.management.CopyFeatures('garages', os.path.join(OUTPUT_DB_PATH, 'Lab4GDB.gdb', 'Garages'))
+arcpy.management.CopyFeatures('Structures', os.path.join(OUTPUT_DB_PATH, 'Lab4GDB.gdb', 'Structures'))
+arcpy.management.CopyFeatures('garages_buffered', os.path.join(OUTPUT_DB_PATH, 'Lab4GDB.gdb', 'Garages_Buffered'))
+arcpy.management.CopyFeatures('intersection', os.path.join(OUTPUT_DB_PATH, 'Lab4GDB.gdb', 'Intersection'))

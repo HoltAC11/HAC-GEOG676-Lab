@@ -62,7 +62,7 @@ class Lab5_Tool(object):
             displayName="Selected Garage Name",
             name="selectedgaragename",
             datatype="GPString",
-            parameterType="Required"
+            parameterType="Required",
             direction="Input"
         )
         param_Buffer_Radius = arcpy.Parameter(

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en"><Esri><CreaDate>20241111</CreaDate><CreaTime>12192600</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Analysis Tools.tbx\Select" Date="20241111" Time="121926">Select garages "C:\Users\holtc\HAC-GEOG676-Lab\Labs\Lab5\Lab 5 Data\Northside Garage.shp" "LotName = 'Northside Garage'"</Process></lineage></DataProperties></Esri></metadata>

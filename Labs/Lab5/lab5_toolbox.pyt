@@ -93,7 +93,7 @@ class Lab5_Tool(object):
         Garage_Layer_Name = parameters[3].valueAsText
         Campus_GDB = parameters[4].valueAsText
         Selected_Garage_Name = parameters[5].valueAsText
-        Buffer_Radius = parameters[6].valueAsText
+        Buffer_Input = parameters[6].valueAsText
 
         print("User Input:")
         print("GDBFolder:" + GDB_Folder)
@@ -131,6 +131,7 @@ class Lab5_Tool(object):
             garage_feature = arcpy.analysis.Select(garages, selected_garage_layer_name, where_clause)
 
             # Buffer the selected building
+            Buffer_Radius = Buffer_Input + "meters"
             garage_buff_name = "/building_buffed"
             arcpy.analysis.Buffer(garage_feature, garage_buff_name, Buffer_Radius)
 

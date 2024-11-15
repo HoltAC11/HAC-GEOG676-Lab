@@ -40,35 +40,28 @@ class Lab5_Tool(object):
         param_Garage_CSV_File = arcpy.Parameter(
             displayName="Garage CSV File",
             name="garagecsvfile",
-            datatype="GPString",
+            datatype="GPType",
             parameterType="Required",
             direction="Input"
         )
         param_Garage_Layer_Name = arcpy.Parameter(
             displayName="Garage Layer Name",
             name="garagelayername",
-            datatype="GPString",
-            parameterType="Required",
-            direction="Input"
-        )
-        param_Campus_GDB = arcpy.Parameter(
-            displayName="Campus GDB",
-            name="campusgdb",
-            datatype="GPString",
+            datatype="GPType",
             parameterType="Required",
             direction="Input"
         )
         param_Selected_Garage_Name = arcpy.Parameter(
             displayName="Selected Garage Name",
             name="selectedgaragename",
-            datatype="GPString",
+            datatype="GPType",
             parameterType="Required",
             direction="Input"
         )
         param_Buffer_Radius = arcpy.Parameter(
             displayName="Buffer Radius",
             name="bufferadius",
-            datatype="GPString",
+            datatype="GPType",
             parameterType="Required",
             direction="Input"
         )
@@ -78,7 +71,6 @@ class Lab5_Tool(object):
             param_GDB_Name,
             param_Garage_CSV_File, 
             param_Garage_Layer_Name,
-            param_Campus_GDB,
             param_Selected_Garage_Name,
             param_Buffer_Radius
             ]
@@ -91,18 +83,18 @@ class Lab5_Tool(object):
         GDB_Name = parameters[1].valueAsText
         Garage_CSV_File = parameters[2].valueAsText
         Garage_Layer_Name = parameters[3].valueAsText
-        Campus_GDB = parameters[4].valueAsText
         Selected_Garage_Name = parameters[5].valueAsText
         Buffer_Input = parameters[6].valueAsText
+
+        Campus_GDB = r'C:\Users\holtc\HAC-GEOG676-Lab\Labs\Lab5\Lab 5 Data\Campus.gdb'
 
         print("User Input:")
         print("GDBFolder:" + GDB_Folder)
         print("GDB_Name: " + GDB_Name)
         print("Garage_CSV_File" + Garage_CSV_File)
         print("Garage_layer_Name: " + Garage_Layer_Name)
-        print("Campus_GDB: " + Campus_GDB)
         print("Selected_Garage_Name: " + Selected_Garage_Name)
-        print("Buffer_Radius: " + Buffer_Radius)
+        print("Buffer_Radius: " + Buffer_Input)
 
         #create gdb
         arcpy.management.CreateFileGDB(GDB_Folder, GDB_Name)

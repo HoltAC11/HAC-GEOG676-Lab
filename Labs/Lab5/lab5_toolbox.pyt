@@ -24,7 +24,7 @@ class Lab5_Tool(object):
     # using the FAC Code as my input (i.e. NSG)
     def getParameterInfo(self):
         """Define parameter definitions"""
-        param_GDB_Folder = arcpy.Paramter(
+        param_GDB_Folder = arcpy.Parameter(
             displayName="GDB Folder",
             name="gdbfolder",
             datatype="GPString",
@@ -94,7 +94,8 @@ class Lab5_Tool(object):
         Garage_Layer_Name = parameters[3].valueAsText
         Garage_CSV_File = parameters[4].valueAsText
         Selected_Garage_Code = parameters[5].valueAsText
-        Buffer_Radius = int(parameters[6].value)
+        Buffer_Input = parameters[6].valueAsText
+        Buffer_Radius = Buffer_Radius = Buffer_Input + " meters"
 
         #create gdb
         arcpy.management.CreateFileGDB(GDB_Folder, GDB_Name)
@@ -136,8 +137,8 @@ class Lab5_Tool(object):
             arcpy.management.CopyFeatures(garage_buff_name, os.path.join(GDB_Full_Path, 'building_buffed'))
             arcpy.management.CopyFeatures(garage_clip_name, os.path.join(GDB_Full_Path, 'garage_clipped'))
 
-            arcpy.AddMessage("Success")
+            arcpy.AddMessage("Success!")
         else:
-            arcpy.AddError("Seems we couldn't find the building name you entered")
+            arcpy.AddError("Unable to locate the building you entered. Please try a different FAC Code like NSG")
 
         return

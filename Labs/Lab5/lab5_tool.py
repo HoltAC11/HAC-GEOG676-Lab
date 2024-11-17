@@ -60,7 +60,7 @@ if shouldProceed == True:
     arcpy.management.CopyFeatures(garage_buff_name, os.path.join(GDB_Full_Path, 'building_buffed'))
     arcpy.management.CopyFeatures(garage_clip_name, os.path.join(GDB_Full_Path, 'garage_clipped'))
 
-    print("success")
+    print("Success!")
 else:
-    print("error")
+    print("Unable to locate the building you entered. Please try a different FAC Code like NSG")
 ### <<<<<< End of your code here

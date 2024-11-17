@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# Holt Chambers
 
 import arcpy
 import os
@@ -21,9 +21,10 @@ class Lab5_Tool(object):
         self.description = ""
         self.canRunInBackground = False
 
+    # using the FAC Code as my input (i.e. NSG)
     def getParameterInfo(self):
         """Define parameter definitions"""
-        param_GDB_folder = arcpy.Parameter(
+        param_GDB_Folder = arcpy.Paramter(
             displayName="GDB Folder",
             name="gdbfolder",
             datatype="GPString",
@@ -37,41 +38,49 @@ class Lab5_Tool(object):
             parameterType="Required",
             direction="Input"
         )
-        param_Garage_CSV_File = arcpy.Parameter(
-            displayName="Garage CSV File",
-            name="garagecsvfile",
-            datatype="GPType",
+        param_Campus_GDB = arcpy.Parameter(
+            displayName="Campus GDB",
+            name="campusgdb",
+            datatype="GPString",
             parameterType="Required",
             direction="Input"
         )
-        param_Garage_Layer_Name = arcpy.Parameter(
+        param_garage_layer = arcpy.Parameter(
             displayName="Garage Layer Name",
             name="garagelayername",
-            datatype="GPType",
+            datatype="GPString",
             parameterType="Required",
             direction="Input"
         )
-        param_Selected_Garage_Name = arcpy.Parameter(
-            displayName="Selected Garage Name",
-            name="selectedgaragename",
-            datatype="GPType",
+        param_garage_csv = arcpy.Parameter(
+            displayName="Garage CSV",
+            name="garagecsv",
+            datatype="GPString",
+            parameterType="Required",
+            direction="Input"
+        )
+        param_Selected_Garage_Code = arcpy.Parameter(
+            displayName="Selected Garage Code",
+            name="selectedgaragecode",
+            datatype="GPString",
             parameterType="Required",
             direction="Input"
         )
         param_Buffer_Radius = arcpy.Parameter(
             displayName="Buffer Radius",
             name="bufferadius",
-            datatype="GPType",
+            datatype="GPDouble",
             parameterType="Required",
             direction="Input"
         )
 
-        params = [
-            param_GDB_folder, 
+        params = [ 
+            param_GDB_Folder,
             param_GDB_Name,
-            param_Garage_CSV_File, 
-            param_Garage_Layer_Name,
-            param_Selected_Garage_Name,
+            param_Campus_GDB,
+            param_garage_layer,
+            param_garage_csv,
+            param_Selected_Garage_Code,
             param_Buffer_Radius
             ]
         return params
@@ -80,21 +89,12 @@ class Lab5_Tool(object):
         """The source code of the tool."""
         #query user input
         GDB_Folder = parameters[0].valueAsText
-        GDB_Name = parameters[1].valueAsText
-        Garage_CSV_File = parameters[2].valueAsText
+        GDB_Name= parameters[1].valueAsText
+        Campus_GDB = parameters[2].valueAsText
         Garage_Layer_Name = parameters[3].valueAsText
-        Selected_Garage_Name = parameters[5].valueAsText
-        Buffer_Input = parameters[6].valueAsText
-
-        Campus_GDB = r'C:\Users\holtc\HAC-GEOG676-Lab\Labs\Lab5\Lab 5 Data\Campus.gdb'
-
-        print("User Input:")
-        print("GDBFolder:" + GDB_Folder)
-        print("GDB_Name: " + GDB_Name)
-        print("Garage_CSV_File" + Garage_CSV_File)
-        print("Garage_layer_Name: " + Garage_Layer_Name)
-        print("Selected_Garage_Name: " + Selected_Garage_Name)
-        print("Buffer_Radius: " + Buffer_Input)
+        Garage_CSV_File = parameters[4].valueAsText
+        Selected_Garage_Code = parameters[5].valueAsText
+        Buffer_Radius = int(parameters[6].value)
 
         #create gdb
         arcpy.management.CreateFileGDB(GDB_Folder, GDB_Name)
@@ -107,32 +107,32 @@ class Lab5_Tool(object):
         ### >>>>>> Add your code here
         #search cursor
         garage_points = Campus_GDB + "/GaragePoints"
-        where_clause = "LotName = '%s'" % Selected_Garage_Name
-        cursor = arcpy.da.SearchCursor(garage_points, "LotName", where_clause)
+        where_clause = "FAC_CODE = '%s'" % Selected_Garage_Code
+        cursor = arcpy.da.SearchCursor(garage_points, "FAC_Code", where_clause)
 
         shouldProceed = False
 
         for row in cursor:
-            if Selected_Garage_Name in row:
+            if Selected_Garage_Code in row:
                 shouldProceed = True
                 break
 
         if shouldProceed == True:
             #select garage as feature layer
-            selected_garage_layer_name = Selected_Garage_Name
-            garage_feature = arcpy.analysis.Select(garages, selected_garage_layer_name, where_clause)
+            selected_garage_layer = os.path.join(Campus_GDB, Selected_Garage_Code)
+            garage_feature = arcpy.Select_analysis(garages, selected_garage_layer, where_clause)
 
             # Buffer the selected building
-            Buffer_Radius = Buffer_Input + "meters"
-            garage_buff_name = "/building_buffed"
-            arcpy.analysis.Buffer(garage_feature, garage_buff_name, Buffer_Radius)
+            garage_buff_name = Campus_GDB + "/building_buffed"
+            arcpy.Buffer_analysis(garage_feature, garage_buff_name, Buffer_Radius)
 
             #clip
             structures = Campus_GDB + "/Structures"
-            garage_clip_name = "/building_clipped"
-            arcpy.analysis.Clip(structures, garage_buff_name, garage_clip_name)
+            garage_clip_name = Campus_GDB + "/building_clipped"
+            arcpy.Clip_analysis(structures, garage_buff_name, garage_clip_name)
 
-            arcpy.management.CopyFeatures(selected_garage_layer_name, os.path.join(GDB_Full_Path, 'garage_selected'))
+            # copy created features to the Lab 5 geodatabase
+            arcpy.management.CopyFeatures(selected_garage_layer, os.path.join(GDB_Full_Path, 'garage_selected'))
             arcpy.management.CopyFeatures(garage_buff_name, os.path.join(GDB_Full_Path, 'building_buffed'))
             arcpy.management.CopyFeatures(garage_clip_name, os.path.join(GDB_Full_Path, 'garage_clipped'))
 
